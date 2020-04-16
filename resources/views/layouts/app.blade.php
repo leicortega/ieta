@@ -28,7 +28,11 @@
                                 <div class="col-sm-6">
                                     <h4 class="page-title">Dashboard Cootranshuila</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item active">User: {{ auth()->user()->name }}</li>
+                                        <li class="breadcrumb-item active">
+                                            @auth
+                                                User: {{ auth()->user()->name }}
+                                            @endauth
+                                        </li>
                                     </ol>
                                 </div>
                             </div> <!-- end row -->
