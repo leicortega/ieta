@@ -29,7 +29,7 @@ class PersonalController extends Controller
             $last_personal = $last_personal->id + 1;
         }
 
-        QrCode::format('png')->size(250)->generate(route('view-personal', $last_personal), '../public/assets/images/qr/qrcode_'.$last_personal.'.png');
+        QrCode::format('png')->size(250)->generate(route('view', $last_personal), '../public/assets/images/qr/qrcode_'.$last_personal.'.png');
 
         $qr = 'assets/images/qr/qrcode_'.$last_personal.'.png';
 
