@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@section('css')
+    <link href="{{ asset('assets/js/bootstrap-fileinput/css/fileinput.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('jsPlugin')
+    <script src="{{ asset('assets/js/bootstrap-fileinput/js/fileinput.min.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('assets/js/bootstrap-fileinput/js/locales/es.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('assets/js/bootstrap-fileinput/themes/fas/theme.min.js') }}" type="text/javascript" ></script>
+@endsection
+
+@section('jsMain')
+    <script src="{{ asset('assets/js/main.js') }}" type="text/javascript" ></script>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -9,7 +23,7 @@
                 <h4 class="mt-0 header-title">Agregar Personal</h4>
                 <hr>
 
-                <form action="{{ route('create-personal') }}" method="POST">
+                <form action="{{ route('create-personal') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 
                     <div class="form-group row">
@@ -61,7 +75,7 @@
                     <div class="form-group row">
                         <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control-file" id="foto" name="foto">
+                            <input type="file" id="foto" name="foto" data-initial-preview="https://placehold.it/200x150/EFEFEF/AAAAAA&text=Foto+Personal" accept="image/*" />
                         </div>
                     </div>
 

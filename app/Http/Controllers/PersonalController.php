@@ -35,6 +35,12 @@ class PersonalController extends Controller
 
         if (!$request['foto']) {
             $foto = 'avatar.png';
+        } else {
+            if ($foto = Personal::setFoto($request->foto)) {
+                $request->request->add(['fotoName' => $foto]);
+
+                $foto = $request['fotoName'];
+            }
         }
 
         $new_personal =  Personal::create([

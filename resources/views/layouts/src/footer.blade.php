@@ -4,6 +4,8 @@
 <script src="{{ asset('assets/js/metismenu.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('assets/js/waves.min.js') }}"></script>
+@yield('jsPlugin')
 
 <!-- App js -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
+@yield('jsMain')
