@@ -37,6 +37,7 @@
                 
                                         <div class="user-thumb text-center mb-4">
                                             <img src="{{ Storage::url('imagenes/personal/'.$personal->foto) }}" class="rounded-circle img-thumbnail thumb-lg" alt="Foto">
+                                            <img src="{{ asset($personal->qr) }}" class="img-thumbnail thumb-lg" alt="Foto">
                                             <h6 class="mt-3">{{ $personal->name }}</h6>
                                         </div>
 
