@@ -5,9 +5,9 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Dashboard Alcaldia de Pitalito | Ver Personal</title>
-        <meta content="Dashboard Alcaldia de Pitalito administracion del personal" name="description" />
-        <meta content="Alcaldia de Pitalito Dev Team" name="author" />
+        <title>Dashboard Cootranshuila | Ver Personal</title>
+        <meta content="Dashboard Cootranshuila administracion del personal" name="description" />
+        <meta content="Cootranshuila Dev Team" name="author" />
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -49,7 +49,7 @@
                                         </form>
                                     </div>
                                     <div class="mt-5 text-center">
-                                        <p>Alcaldia de Pitalito © Copyright 2020, Todos los derechos reservados.</p>
+                                        <p>Cootranshuila © Copyright 2020, Todos los derechos reservados.</p>
                                     </div>
                                 </div>
                             </div>

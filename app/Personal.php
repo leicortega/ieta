@@ -29,4 +29,4 @@ class Personal extends Model
         }
         
     }
-}
+}   

@@ -26,7 +26,7 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-sm-6">
-                                    <h4 class="page-title">Dashboard Alcaldia de Pitalito</h4>
+                                    <h4 class="page-title">Dashboard Cootranshuila</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item active">
                                             @auth
@@ -49,7 +49,7 @@
                 <!-- content -->
 
                 <footer class="footer">
-                    Alcaldia de Pitalito © Copyright 2020, Todos los derechos reservados.
+                    Cootranshuila LTDA © Copyright 2020, Todos los derechos reservados.
                 </footer>
 
             </div>
