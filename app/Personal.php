@@ -12,7 +12,7 @@ class Personal extends Model
     protected $table = 'personal';
 
     protected $fillable = [
-        'identificacion', 'name', 'sede', 'cargo', 'estado', 'email', 'pin', 'qr', 'foto',
+        'identificacion', 'name', 'sede', 'cargo', 'estado', 'email', 'rh', 'pin', 'qr', 'foto',
     ];
 
     public static function setFoto($foto) {

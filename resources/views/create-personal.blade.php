@@ -22,6 +22,27 @@
 
                 <h4 class="mt-0 header-title">Agregar Personal</h4>
                 <hr>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (isset($create) && $create = 1)
+                    <div class="alert alert-success">
+                        <h6>Personal registrado con exito. <b><a class="text-success" href="#" data-toggle="modal" data-target="#modal-blade">Clic aqui para imprimir el codigo QR</a></b></h6>
+                    </div> 
+                @endif
+
+                @if (isset($create) && $create = 0)
+                    <div class="alert alert-danger">
+                        <h6>Personal NO registrado correctamente. </h6>
+                    </div> 
+                @endif
 
                 <form action="{{ route('create-personal') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -73,6 +94,23 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="rh" class="col-sm-2 col-form-label">RH</label>
+                        <div class="col-sm-10">
+                            <select name="rh" id="rh" class="form-control" required>
+                                <option value="">Seleccione el RH</option>
+                                <option value="A+">A+</option>
+                                <option value="B+">B+</option>
+                                <option value="O+">O+</option>
+                                <option value="AB+">AB+</option>
+                                <option value="A-">A-</option>
+                                <option value="B-">B-</option>
+                                <option value="O-">O-</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                         <div class="col-sm-10">
                             <input type="file" id="foto" name="foto" data-initial-preview="https://placehold.it/200x150/EFEFEF/AAAAAA&text=Foto+Personal" accept="image/*" />
@@ -88,5 +126,24 @@
             </div>
         </div>
     </div> <!-- end col -->
+</div>
+
+{{-- Modal QR --}}
+<div class="modal fade bs-example-modal-lg" id="modal-blade" tabindex="-1" role="dialog" aria-labelledby="modal-blade-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="modal-blade-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="modal-blade-body">
+                @if (isset($qr))
+                    <img src="{{ asset($qr) }}" class="img-fluid" alt="Foto">
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Requests\PersonalCreateFormRequest;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Personal;
 
@@ -19,7 +20,7 @@ class PersonalController extends Controller
         return view('create-personal');
     }
 
-    protected function create(Request $request) 
+    protected function create(PersonalCreateFormRequest $request) 
     {
         $last_personal = Personal::orderby('id','DESC')->first();
 
@@ -50,14 +51,19 @@ class PersonalController extends Controller
             'cargo' => $request['cargo'],
             'estado' => $request['estado'],
             'email' => $request['email'],
+            'rh' => $request['rh'],
             'pin' => rand(1000, 9999),
             'qr' => $qr,
             'foto' => $foto
         ]);
 
-        $new_personal->save();
+        if($new_personal->save()){
+            return view('create-personal', ['create' => 1, 'qr' => $new_personal->qr]);
+        } else {
+            return view('create-personal', ['create' => 0]);
+        }
 
-        return view('create-personal', ['personal' => $new_personal]);
+        
     }
 
     public function view_all()

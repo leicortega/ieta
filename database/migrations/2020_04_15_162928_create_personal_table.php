@@ -21,6 +21,7 @@ class CreatePersonalTable extends Migration
             $table->string('cargo');
             $table->enum('estado', ['activo', 'inactivo']);
             $table->string('email')->unique();
+            $table->string('rh', 6);
             $table->string('pin');
             $table->string('qr');
             $table->string('foto');

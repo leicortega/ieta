@@ -19,3 +19,15 @@ $('#buscar-qr').submit(function () {
     });
     return false;
 });
+
+function codeQr(id) {
+    $.ajax({
+        url: '/codeQr/'+id,
+        type: 'get',
+        success: function (data) {
+            $('#modal-blade').modal('show');
+            $('#codeQr').html(`<img src="${data.qr}" class="img-fluid" alt="Foto">`);
+            $('#modal-blade-title').html(data.name);
+        }
+    });
+}
