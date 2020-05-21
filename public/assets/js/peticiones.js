@@ -43,7 +43,7 @@ function verPersona(id) {
             
                 <form action="/update-personal" method="POST" enctype="multipart/form-data">
 
-                    <input type="hidden" name="_token" value="qu3q9hdEknV82YbsFpaG72EtNFEKgAbCbWThwVr4">
+                    <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                     <input type="hidden" name="id" value="${data.personal[0].id}">
                 
                     <div class="form-group row">
