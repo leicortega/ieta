@@ -55,7 +55,9 @@
                                         <div class="user-thumb text-center mb-4">
                                             <h6 class="mt-3">Estado: {{ $personal->estado }}</h6>
                                         </div>
-
+                                        <div class="user-thumb text-center mb-4">
+                                            <h6 class="mt-3">RH: {{ $personal->rh }}</h6>
+                                        </div>
                     
             
                                         
