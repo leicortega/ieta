@@ -10,6 +10,7 @@ Route::get('/', 'HomeController@index')->name('index');
 
 Route::get('/create-personal', 'PersonalController@index');
 Route::post('/create-personal/create', 'PersonalController@create')->name('create-personal');
+Route::post('/update-personal', 'PersonalController@update');
 Route::get('/view-personal', 'PersonalController@view_all')->name('view-personal-all');
 Route::get('/codeQr/{id}', function ($id) {
     $personal = Personal::find($id);

@@ -11,6 +11,18 @@
                 <h4 class="mt-0 header-title">Todo el Personal</h4>
                 <hr>
 
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        <h6>La persona se actualizo correctamente.</h6>
+                    </div>
+                @endif
+                
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        <h6>Ocurrio un error, contacte al desarrollador.</h6>
+                    </div>
+                @endif
+
                 <div class="row p-5">                   
                     <div class="table-responsive mb-3" id="Resultados">
                         <table class="table table-centered table-hover table-bordered mb-0">
@@ -22,7 +34,7 @@
                                     <th scope="col">Sede</th>
                                     <th scope="col">Cargo</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col" class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,6 +48,9 @@
                                         <td>{{ $item->cargo }}</td>
                                         <td>{{ $item->estado }}</td>
                                         <td class="text-center">
+                                            <button type="button" class="btn btn-outline-info btn-sm" onclick="verPersona({{ $item->identificacion }})" data-toggle="tooltip" data-placement="top" title="Editar Persona">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
                                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="codeQr({{ $item->id }})" data-toggle="tooltip" data-placement="top" title="Ver Codigo QR">
                                                 <i class="mdi mdi-eye"></i>
                                             </button>

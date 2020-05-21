@@ -66,6 +66,26 @@ class PersonalController extends Controller
         
     }
 
+    public function update(Request $request)
+    {
+        $persona = Personal::find($request->id);
+        
+        $persona->identificacion = $request->identificacion;
+        $persona->name = $request->name;
+        $persona->sede = $request->sede;
+        $persona->cargo = $request->cargo;
+        $persona->estado = $request->estado;
+        $persona->email = $request->email;
+        $persona->rh = $request->rh;
+
+        if ($persona->save()) {
+            return redirect()->back()->with('success', 1);
+        } else {
+            return redirect()->back()->with('error', 1);
+        }
+        
+    }
+
     public function view_all()
     {
         $personal = Personal::paginate(10);
