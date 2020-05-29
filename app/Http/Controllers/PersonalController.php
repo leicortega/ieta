@@ -45,6 +45,7 @@ class PersonalController extends Controller
         }
 
         $new_personal =  Personal::create([
+            'id' => $last_personal,
             'identificacion' => $request['identificacion'],
             'name' => $request['name'],
             'sede' => $request['sede'],
