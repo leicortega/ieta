@@ -19,7 +19,7 @@ Route::get('/codeQr/{id}', function ($id) {
 });
 
 // Rutas Control de ingreso
-Route::get('/control/funcionarios', 'ControlIngresoController@funcionarios');
+Route::get('/control/funcionarios', 'ControlIngresoController@funcionarios')->name('control-ingreso');
 Route::get('/control/clientes', 'ControlIngresoController@clientes');
 Route::post('/control/create', 'ControlIngresoController@create');
 Route::post('/control/registrar', 'ControlIngresoController@registrar');

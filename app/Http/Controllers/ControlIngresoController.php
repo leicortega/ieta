@@ -79,7 +79,7 @@ class ControlIngresoController extends Controller
             ]);
     
             if($new_ingreso->save()){
-                return redirect()->back()->with('ingreso', 'Control de ingreso correctamente.');
+                return redirect()->route('control-ingreso')->with('ingreso', 'Control de ingreso correctamente.');
             } else {
                 return view('funcionarios', ['ingreso' => 0, 'funcionarios' => $funcionarios]);
             }
