@@ -8,6 +8,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('index');
 
+// Rutas Personal
 Route::get('/create-personal', 'PersonalController@index');
 Route::post('/create-personal/create', 'PersonalController@create')->name('create-personal');
 Route::post('/update-personal', 'PersonalController@update');
@@ -16,6 +17,13 @@ Route::get('/codeQr/{id}', function ($id) {
     $personal = Personal::find($id);
     return ['qr' => $personal->qr, 'name' => $personal->name];
 });
+
+// Rutas Control de ingreso
+Route::get('/control/funcionarios', 'ControlIngresoController@funcionarios');
+Route::get('/control/clientes', 'ControlIngresoController@clientes');
+Route::post('/control/create', 'ControlIngresoController@create');
+Route::post('/control/registrar', 'ControlIngresoController@registrar');
+Route::post('/control/search', 'ControlIngresoController@search');
 
 Route::get('/view', function () { return view('view'); });
 

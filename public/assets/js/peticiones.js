@@ -122,3 +122,10 @@ function verPersona(id) {
         }
     });
 }
+
+function registrarIngreso(id, name) {
+    $('#registrarIngreso-title').html('Registrar ingreso de ' + name)
+    $('#control_ingreso_id').val(id)
+
+    $('#registrarIngreso').modal('show')
+}
