@@ -24,9 +24,9 @@
                     </div>
                 @endif
 
-                @if (session()->has('ingreso'))
+                @if (session()->has('ingreso') && session('ingreso') == 1)
                     <div class="alert alert-success">
-                        <h6>{{ session('ingreso') }}</h6>
+                        <h6>Se registro el ingreso correctamente</h6>
                     </div>
                 @endif
                 
