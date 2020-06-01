@@ -12,13 +12,13 @@
                 
                 <hr>
 
-                @if (isset($create) && $create == 1)
+                @if (session()->has('create') && session('create') == 1)
                     <div class="alert alert-success">
                         <h6>El Funcionario se creo correctamente.</h6>
                     </div>
                 @endif
                 
-                @if (isset($create) && $create == 0)
+                @if (session()->has('create') && session('create') == 0)
                     <div class="alert alert-danger">
                         <h6>Ocurrio un error, contacte al desarrollador.</h6>
                     </div>
@@ -30,13 +30,13 @@
                     </div>
                 @endif
                 
-                @if (isset($ingreso) && $ingreso == 0)
+                @if (session()->has('ingreso') && session('ingreso') == 0)
                     <div class="alert alert-danger">
                         <h6>Ocurrio un error, contacte al desarrollador.</h6>
                     </div>
                 @endif
 
-                @if (isset($ingreso) && $ingreso == 2)
+                @if (session()->has('ingreso') && session('ingreso') == 2)
                     <div class="alert alert-danger">
                         <h6>Ya hay un registro hoy de esta persona.</h6>
                     </div>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" value="Funcionario" name="tipo" id="tipo" />
+                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" id="tipo" />
 
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Agregar</button>
@@ -234,6 +234,8 @@
                             </select>
                         </div>
                     </div>
+
+                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" id="tipo" />
 
                     <input type="hidden" value="" name="control_ingreso_id" id="control_ingreso_id" />
 

@@ -54,9 +54,17 @@ class ControlIngresoController extends Controller
                 ->paginate(10);
 
         if($new->save()){
-            return view('funcionarios', ['create' => 1, 'funcionarios' => $funcionarios]);
+            if ($request['tipo'] == 'Funcionario') {
+                return redirect()->route('funcionarios')->with('create', 1);
+            } else {
+                return redirect()->route('clientes')->with('create', 1);
+            }
         } else {
-            return view('funcionarios', ['create' => 0, 'funcionarios' => $funcionarios]);
+            if ($request['tipo'] == 'Funcionario') {
+                return redirect()->route('funcionarios')->with('create', 0);
+            } else {
+                return redirect()->route('clientes')->with('create', 0);
+            }
         }
     }
 
@@ -68,7 +76,11 @@ class ControlIngresoController extends Controller
                 ->paginate(10);
 
         if ($ingresado_hoy) {
-            return view('funcionarios', ['ingreso' => 2, 'funcionarios' => $funcionarios]);
+            if ($request['tipo'] == 'Funcionario') {
+                return redirect()->route('funcionarios')->with('ingreso', 2);
+            } else {
+                return redirect()->route('clientes')->with('ingreso', 2);
+            }
         } else {
             $new_ingreso = Ingreso::create([
                 'fecha' => $request['fecha'],
@@ -79,9 +91,17 @@ class ControlIngresoController extends Controller
             ]);
     
             if($new_ingreso->save()){
-                return redirect()->route('control-ingreso')->with('ingreso', 'Control de ingreso correctamente.');
+                if ($request['tipo'] == 'Funcionario') {
+                    return redirect()->route('funcionarios')->with('ingreso', 1);
+                } else {
+                    return redirect()->route('clientes')->with('ingreso', 1);
+                }
             } else {
-                return view('funcionarios', ['ingreso' => 0, 'funcionarios' => $funcionarios]);
+                if ($request['tipo'] == 'Funcionario') {
+                    return redirect()->route('funcionarios')->with('ingreso', 0);
+                } else {
+                    return redirect()->route('clientes')->with('ingreso', 0);
+                }
             }
         }
     }
