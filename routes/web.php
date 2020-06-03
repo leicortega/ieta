@@ -25,6 +25,13 @@ Route::post('/control/create', 'ControlIngresoController@create');
 Route::post('/control/registrar', 'ControlIngresoController@registrar');
 Route::post('/control/search', 'ControlIngresoController@search');
 
+// Rutas administrador
+Route::group(['middleware' => ['permission:universal']], function () {
+    Route::get('/admin', 'AdminController@index');
+    Route::get('/admin/users', 'AdminController@users')->name('users');
+    Route::post('/admin/users/create', 'AdminController@create')->name('users-create');
+});
+
 Route::get('/view', function () { return view('view'); });
 
 Route::get('/view/{id}', function ($id) {

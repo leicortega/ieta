@@ -24,6 +24,8 @@ class CreateIngresosTable extends Migration
             $table->foreignId('control_ingreso_id')
                 ->constrained()
                 ->onDelete('cascade');
+                
+            $table->string('sede', 90);
 
             $table->timestamps();
         });

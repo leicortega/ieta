@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Control_ingreso;
 use App\Ingreso;
+use App\User;
 
 class ControlIngresoController extends Controller
 {
@@ -13,10 +16,24 @@ class ControlIngresoController extends Controller
     }
 
     public function funcionarios () {
+        // $funcionarios = DB::table('control_ingresos')
+        //         ->join('ingresos', function ($join) {
+        //             $join->on('control_ingresos.id', '=', 'ingresos.control_ingreso_id')
+        //                 ->where('ingresos.sede', '=', Auth::user()->sede)
+        //                 ->orderBy('fecha','desc'); 
+        //         })
+        //         ->paginate(10);
+
+        
+
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                $query->orderBy('fecha','desc'); }))
+                    $query->orderBy('fecha','desc'); 
+                    $query->where('sede', Auth::user()->sede); 
+                }))
                 ->where('tipo', 'Funcionario')
                 ->paginate(10);
+
+        // dd($funcionarios[0]->ingresos);
 
         return view('funcionarios', ['funcionarios' => $funcionarios]);
     }

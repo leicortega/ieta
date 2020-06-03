@@ -14,22 +14,35 @@
 
                 <li class="menu-title">Apps</li>
                 
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="ion ion-md-person"></i><span> Personal <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
-                    <ul class="submenu">
-                        <li><a href="/create-personal">Crear</a></li>
-                        <li><a href="/view-personal">Ver Personal</a></li>
-                    </ul>
-                </li>
+                @if (Request::is('admin') || Request::is('admin/*'))
 
-                <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="ion ion-md-exit"></i><span> Control de Ingreso <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
-                    <ul class="submenu">
-                        <li><a href="/control/funcionarios">Funcionarios</a></li>
-                        <li><a href="/control/clientes">Clientes</a></li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="/admin/users" class="waves-effect"><i class="ion ion-md-people"></i><span> Usuarios <span class="float-right menu-arrow"></span> </span></a>
+                    </li>
 
+                @else
+
+                    @canany('personal')
+                        <li>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ion ion-md-person"></i><span> Personal <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                            <ul class="submenu">
+                                <li><a href="/create-personal">Crear</a></li>
+                                <li><a href="/view-personal">Ver Personal</a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+
+                    @canany('control ingreso')
+                        <li>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="ion ion-md-exit"></i><span> Control de Ingreso <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                            <ul class="submenu">
+                                <li><a href="/control/funcionarios">Funcionarios</a></li>
+                                <li><a href="/control/clientes">Clientes</a></li>
+                            </ul>
+                        </li>
+                    @endcanany
+
+                @endif                
 
             </ul>
 
