@@ -15,17 +15,7 @@ class ControlIngresoController extends Controller
         $this->middleware('auth');
     }
 
-    public function funcionarios () {
-        // $funcionarios = DB::table('control_ingresos')
-        //         ->join('ingresos', function ($join) {
-        //             $join->on('control_ingresos.id', '=', 'ingresos.control_ingreso_id')
-        //                 ->where('ingresos.sede', '=', Auth::user()->sede)
-        //                 ->orderBy('fecha','desc'); 
-        //         })
-        //         ->paginate(10);
-
-        
-
+    public function funcionarios () { 
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
                     $query->orderBy('fecha','desc'); 
                     $query->where('sede', Auth::user()->sede); 

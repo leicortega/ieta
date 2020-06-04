@@ -92,9 +92,9 @@
                             <tbody>
                                 @foreach ($funcionarios as $item)
                                     @php
-                                        if (!isset($item->ingresos[0]['fecha'])) {
-                                            continue;
-                                        }
+                                        // if (!isset($item->ingresos[0]['fecha']) || ) {
+                                        //     continue;
+                                        // }
                                         $ultimoIngreso = isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['fecha'] : '2000-00-00';
                                     @endphp
                                     <tr>
