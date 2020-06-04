@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ingreso extends Model
 {
     protected $fillable = [
-        'fecha', 'estado', 'temperatura', 'contagiados', 'control_ingreso_id',
+        'fecha', 'estado', 'temperatura', 'contagiados', 'control_ingreso_id', 'sede'
     ];
 
     public function persona() {

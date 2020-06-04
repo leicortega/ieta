@@ -104,7 +104,8 @@ class ControlIngresoController extends Controller
                 'estado' => $request['estado'],
                 'temperatura' => $request['temperatura'],
                 'contagiados' => $request['contagiados'],
-                'control_ingreso_id' => $request['control_ingreso_id']
+                'control_ingreso_id' => $request['control_ingreso_id'],
+                'sede' => Auth::user()->sede
             ]);
     
             if($new_ingreso->save()){
