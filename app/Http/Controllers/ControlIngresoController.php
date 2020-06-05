@@ -23,7 +23,7 @@ class ControlIngresoController extends Controller
                 ->where('tipo', 'Funcionario')
                 ->paginate(10);
 
-        // dd($funcionarios[0]->ingresos);
+        // dd($funcionarios[7]->ingresos->count());
 
         return view('funcionarios', ['funcionarios' => $funcionarios]);
     }
@@ -40,7 +40,7 @@ class ControlIngresoController extends Controller
     public function search(Request $request) {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
                 $query->orderBy('fecha','desc'); }))
-                ->where('identificacion', $request['identificacion'])
+                ->where('identificacion', $request['identificacion_search'])
                 ->paginate(10);
 
         return view('funcionarios', ['funcionarios' => $funcionarios]);
@@ -76,7 +76,7 @@ class ControlIngresoController extends Controller
     }
 
     public function registrar(Request $request) {
-        $ingresado_hoy = Ingreso::where([['control_ingreso_id', $request['control_ingreso_id']], ['fecha', $request['fecha']]])->exists();
+        $ingresado_hoy = Ingreso::where([['control_ingreso_id', $request['control_ingreso_id']], ['fecha', $request['fecha']], ['sede', Auth::user()->sede]])->exists();
 
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
                 $query->orderBy('fecha','desc'); }))
@@ -114,5 +114,11 @@ class ControlIngresoController extends Controller
         }
     }
 
+    public function createSearch(Request $request) {
+        $user = Control_ingreso::where('identificacion', $request['id'])->get();
 
+        if ($user[0]->exists()) {
+            return ['id' => $user[0]->id, 'name' => $user[0]->name];
+        }
+    }
 }

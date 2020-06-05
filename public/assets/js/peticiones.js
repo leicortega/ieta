@@ -129,3 +129,19 @@ function registrarIngreso(id, name) {
 
     $('#registrarIngreso').modal('show')
 }
+
+$('#identificacion').blur(function () {
+    var id = $('#identificacion').val()
+    $.ajax({
+        url: '/control/create/search/'+id,
+        type: 'get',
+        success: function (data) {
+            if (data) {
+                registrarIngreso(data.id, data.name)
+                $('#identificacion').val('')
+                $('#crearFuncionario').modal('hide')
+            }
+        }
+    });
+    return false;
+})

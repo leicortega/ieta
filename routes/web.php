@@ -22,6 +22,7 @@ Route::get('/codeQr/{id}', function ($id) {
 Route::get('/control/funcionarios', 'ControlIngresoController@funcionarios')->name('funcionarios');
 Route::get('/control/clientes', 'ControlIngresoController@clientes')->name('clientes');
 Route::post('/control/create', 'ControlIngresoController@create');
+Route::get('/control/create/search/{id}', 'ControlIngresoController@createSearch');
 Route::post('/control/registrar', 'ControlIngresoController@registrar');
 Route::post('/control/search', 'ControlIngresoController@search');
 

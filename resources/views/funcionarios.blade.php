@@ -57,7 +57,7 @@
 
                                     <div class="form-group mb-0 col-lg-6">
                                         <div class="input-group mb-0">
-                                            <input type="text" class="form-control" placeholder="Numero de identificacion" name="identificacion" required />
+                                            <input type="text" class="form-control" placeholder="Numero de identificacion" name="identificacion_search" required />
                                             <div class="input-group-append">
                                                 <button class="btn btn-success" type="submit" id="project-search-addon"><i class="mdi mdi-magnify search-icon font-12"></i></button>
                                             </div>
@@ -92,9 +92,17 @@
                             <tbody>
                                 @foreach ($funcionarios as $item)
                                     @php
-                                        // if (!isset($item->ingresos[0]['fecha']) || ) {
-                                        //     continue;
-                                        // }
+                                        $ingresos_aqui = 0; // Variable para saber si ha ingresado a la sucursal que se encuentra logueada
+                                        if ($item->ingresos->count() != 0) {
+                                            foreach ($item->ingresos as $ingreso) {
+                                                if ($ingreso->sede == Auth::user()->sede) {
+                                                    $ingresos_aqui ++;
+                                                }
+                                            }
+                                            if ($ingresos_aqui == 0) {
+                                                continue;
+                                            }
+                                        }
                                         $ultimoIngreso = isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['fecha'] : '2000-00-00';
                                     @endphp
                                     <tr>
@@ -144,16 +152,16 @@
                     @csrf
 
                     <div class="form-group row">
-                        <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" name="name" id="name" placeholder="Escriba el nombre" required />
-                        </div>
-                    </div>
-                
-                    <div class="form-group row">
                         <label for="identificacion" class="col-sm-2 col-form-label">Identificacion</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="number" name="identificacion" id="identificacion" placeholder="Escriba la identificacion" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="name" id="name" placeholder="Escriba el nombre" required />
                         </div>
                     </div>
 
@@ -178,7 +186,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" id="tipo" />
+                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
 
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Agregar</button>
@@ -229,8 +237,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="contagiados" class="col-sm-2 col-form-label">¿Ha estado con contagiados?</label>
-                        <div class="col-sm-10">
+                        <label for="contagiados" class="col-sm-6 col-form-label">¿Has tenido contacto con personas que tengan o hayan tenido coronavirus (covid-19)?</label>
+                        <div class="col-sm-6">
                             <select name="contagiados" id="contagiados" class="form-control" required>
                                 <option value="No">No</option>
                                 <option value="Si">Si</option>
@@ -238,7 +246,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" id="tipo" />
+                    <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
 
                     <input type="hidden" value="" name="control_ingreso_id" id="control_ingreso_id" />
 
