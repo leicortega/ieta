@@ -23,14 +23,16 @@ class ControlIngresoController extends Controller
                 ->where('tipo', 'Funcionario')
                 ->paginate(10);
 
-        // dd($funcionarios[7]->ingresos->count());
+        // dd($funcionarios->where('sede', Auth::user()->sede));
 
         return view('funcionarios', ['funcionarios' => $funcionarios]);
     }
 
     public function clientes () {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                $query->orderBy('fecha','desc'); }))
+                    $query->orderBy('fecha','desc');
+                    $query->where('sede', Auth::user()->sede); 
+                }))
                 ->where('tipo', 'Cliente')
                 ->paginate(10);
 
@@ -56,15 +58,11 @@ class ControlIngresoController extends Controller
             'tipo' => $request['tipo'],
         ]);
 
-        $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                $query->orderBy('fecha','desc'); }))
-                ->paginate(10);
-
         if($new->save()){
             if ($request['tipo'] == 'Funcionario') {
-                return redirect()->route('funcionarios')->with('create', 1);
+                return redirect()->route('funcionarios', ['create' => 1, 'id' => $new->id, 'name' => $new->name]);
             } else {
-                return redirect()->route('clientes')->with('create', 1);
+                return redirect()->route('clientes', array('datos' => $datos));
             }
         } else {
             if ($request['tipo'] == 'Funcionario') {

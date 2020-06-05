@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
-@section('jsMain') <script src="{{ asset('assets/js/peticiones.js') }}"></script> @endsection
+@section('jsMain') 
+    <script src="{{ asset('assets/js/peticiones.js') }}"></script> 
+    @if (isset($_GET['create']) && $_GET['create'] == 1)
+        <script>registrarIngreso('<?php echo $_GET["id"] ?>', '<?php echo $_GET["name"] ?>')</script>
+    @endif
+@endsection
 
 @section('content')
 <div class="row">
@@ -92,16 +97,8 @@
                             <tbody>
                                 @foreach ($funcionarios as $item)
                                     @php
-                                        $ingresos_aqui = 0; // Variable para saber si ha ingresado a la sucursal que se encuentra logueada
-                                        if ($item->ingresos->count() != 0) {
-                                            foreach ($item->ingresos as $ingreso) {
-                                                if ($ingreso->sede == Auth::user()->sede) {
-                                                    $ingresos_aqui ++;
-                                                }
-                                            }
-                                            if ($ingresos_aqui == 0) {
-                                                continue;
-                                            }
+                                        if (!isset($item->ingresos[0]['fecha'])) {
+                                            continue;
                                         }
                                         $ultimoIngreso = isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['fecha'] : '2000-00-00';
                                     @endphp
@@ -260,3 +257,7 @@
     </div>
 </div>
 @endsection
+        
+
+
+
