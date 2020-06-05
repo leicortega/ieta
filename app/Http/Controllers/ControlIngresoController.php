@@ -41,7 +41,9 @@ class ControlIngresoController extends Controller
 
     public function search(Request $request) {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                $query->orderBy('fecha','desc'); }))
+                    $query->orderBy('fecha','desc'); 
+                    $query->where('sede', Auth::user()->sede); 
+                }))
                 ->where('identificacion', $request['identificacion_search'])
                 ->paginate(10);
 
