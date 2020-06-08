@@ -64,7 +64,7 @@ class ControlIngresoController extends Controller
             if ($request['tipo'] == 'Funcionario') {
                 return redirect()->route('funcionarios', ['create' => 1, 'id' => $new->id, 'name' => $new->name]);
             } else {
-                return redirect()->route('clientes', array('datos' => $datos));
+                return redirect()->route('clientes', ['create' => 1, 'id' => $new->id, 'name' => $new->name]);
             }
         } else {
             if ($request['tipo'] == 'Funcionario') {
