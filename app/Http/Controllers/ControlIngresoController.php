@@ -23,8 +23,6 @@ class ControlIngresoController extends Controller
                 ->where('tipo', 'Funcionario')
                 ->paginate(10);
 
-        // dd($funcionarios->where('sede', Auth::user()->sede));
-
         return view('funcionarios', ['funcionarios' => $funcionarios]);
     }
 
@@ -94,6 +92,13 @@ class ControlIngresoController extends Controller
                 'estado' => $request['estado'],
                 'temperatura' => $request['temperatura'],
                 'contagiados' => $request['contagiados'],
+                'dolor'=>$request['dolor'],
+                'fiebre'=>$request['fiebre'],
+                'tos'=>$request['tos'],
+                'dificultad'=>$request['dificultad'],
+                'fatiga'=>$request['fatiga'],
+                'escalofrio'=>$request['escalofrio'],
+                'musculo'=>$request['musculo'],
                 'control_ingreso_id' => $request['control_ingreso_id'],
                 'sede' => Auth::user()->sede
             ]);
@@ -120,5 +125,10 @@ class ControlIngresoController extends Controller
         if ($user[0]->exists()) {
             return ['id' => $user[0]->id, 'name' => $user[0]->name];
         }
+    }
+
+    public function verHistorial(Request $request, $id){
+        $funcionarios = Control_ingreso::with('ingresos')->where('id', $id)->paginate(10);
+        return view('ver-registros', ['funcionarios' => $funcionarios]);
     }
 }

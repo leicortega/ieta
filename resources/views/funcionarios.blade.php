@@ -74,11 +74,13 @@
                                     <h6>Fecha: {{ $hoy }} </h6>
                                 </div>
                                 <div class="col-4">
+                                @can('control ingreso')
                                     <div class="float-right">
-                                        <button class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light float-right" data-toggle="modal" data-target="#crearFuncionario" type="button">
+                                        <button  style="display: blok" class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light float-right" data-toggle="modal" data-target="#crearFuncionario" type="button">
                                             <i class="mdi mdi-plus mr-2"></i> Agregar
                                         </button>
                                     </div>
+                                @endcan
                                 </div>
                             </div> <!-- end row -->
                         </div>
@@ -111,13 +113,18 @@
                                         <td>{{ isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['fecha'] : '' }}</td>
                                         <td>{{ isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['temperatura'] : '' }}</td>
                                         <td class="text-center">
+
+                                        @canany('control ingreso')
                                             <button type="button" class="btn btn-outline-info btn-sm" <?php echo $hoy <= $ultimoIngreso ? 'disabled' : '' ?> onclick="registrarIngreso({{ $item->id }}, '{{ $item->name }}')" data-toggle="tooltip" data-placement="top" title="Registrar ingreso">
                                                 <i class="mdi mdi-pencil"></i>
-                                            </button>
-                                            
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="historialIngresos({{ $item->id }})" data-toggle="tooltip" data-placement="top" title="Ver Historial">
+                                            </button>                                            
+                                        @endcanany
+                                        
+                                        @canany('administrador personal') 
+                                            <a type="button" class="btn btn-outline-secondary btn-sm" href="{{route('VerHistorial',$item->id)}}" title="Ver Historial">
                                                 <i class="mdi mdi-eye"></i>
-                                            </button>
+                                            </a>
+                                        @endcanany 
                                         </td>
                                     </tr>
                                 @endforeach
@@ -177,14 +184,15 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                        <label for="correo" class="col-sm-2 col-form-label">Correo</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="email" name="email" id="email" placeholder="Escriba el correo"  />
                         </div>
                     </div>
+                    
 
                     <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
-
+                                           
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Agregar</button>
                     </div> 
@@ -242,11 +250,74 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="dolor" class="col-sm-2 col-form-label">¿Presenta dolor de garganta?</label>
+                        <div class="col-sm-10">
+                            <select name="dolor" id="dolor" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fiebre" class="col-sm-3 col-form-label">¿Presenta fiebre?</label>
+                        <div class="col-sm-9">
+                            <select name="fiebre" id="fiebre" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="tos" class="col-sm-2 col-form-label">¿Presenta tos?</label>
+                        <div class="col-sm-10">
+                            <select name="tos" id="tos" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dificultad" class="col-sm-3 col-form-label">¿Presenta dificultad para respirar?</label>
+                        <div class="col-sm-9">
+                            <select name="dificultad" id="dificultad" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fatiga" class="col-sm-3 col-form-label">¿Presenta fatiga?</label>
+                        <div class="col-sm-9">
+                            <select name="fatiga" id="fatiga" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="escalofrio" class="col-sm-3 col-form-label">¿Presenta escalofrio?</label>
+                        <div class="col-sm-9">
+                            <select name="escalofrio" id="escalofrio" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="musculo" class="col-sm-3 col-form-label">¿Presenta dolor muscular?</label>
+                        <div class="col-sm-9">
+                            <select name="musculo" id="musculo" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
 
-                    <input type="hidden" value="" name="control_ingreso_id" id="control_ingreso_id" />
-
+                    <input type="hidden"  name="control_ingreso_id" id="control_ingreso_id" />
+                    
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Registrar</button>
                     </div> 

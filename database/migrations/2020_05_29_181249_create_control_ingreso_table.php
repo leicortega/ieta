@@ -14,6 +14,7 @@ class CreateControlIngresoTable extends Migration
     public function up()
     {
         Schema::create('control_ingresos', function (Blueprint $table) {
+
             $table->id();
 
             $table->string('name');
@@ -22,6 +23,21 @@ class CreateControlIngresoTable extends Migration
             $table->integer('edad');
             $table->string('email')->unique()->nullable();
             $table->enum('tipo', ['Funcionario', 'Cliente']);
+            $table->string('direccion',30)->nullable();
+            $table->string('barrio',30)->nullable();
+            $table->enum('transporte', ['vehiculo particular', 'servicio publico', 'bicicleta', 'a pie'])->nullable();
+            $table->string('tiempo', 30)->nullable();
+            $table->enum('diabetes', ['Si', 'No'])->nullable();
+            $table->enum('cardio_vascular', ['Si', 'No'])->nullable();
+            $table->enum('pulmonar', ['Si', 'No'])->nullable();
+            $table->enum('obesidad', ['Si', 'No'])->nullable();
+            $table->bigInteger('personas_convive')->nullable();
+            $table->string('rango', 20)->nullable();
+            $table->enum('campo_salud', ['Si', 'No'])->nullable();
+            $table->enum('enfermedad_inmunosupresora', ['Si', 'No'])->nullable();
+            $table->enum('hipertension', ['Si', 'No'])->nullable();
+            $table->enum('enfermedad_pulmonar', ['Si', 'No'])->nullable();
+
 
             $table->timestamps();
         });
