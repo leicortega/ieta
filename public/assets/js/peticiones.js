@@ -133,7 +133,7 @@ function registrarIngreso(id, name) {
 $('#identificacion').blur(function () {
     var id = $('#identificacion').val()
     $.ajax({
-        url: '/control/create/search/'+id,
+        url: '/control_ingreso/create/search/'+id,
         type: 'get',
         success: function (data) {
             if (data) {
