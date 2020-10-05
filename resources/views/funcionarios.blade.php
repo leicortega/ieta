@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('jsMain') 
-    <script src="{{ asset('assets/js/peticiones.js') }}"></script> 
+@section('jsMain')
+    <script src="{{ asset('assets/js/peticiones.js') }}"></script>
     @if (isset($_GET['create']) && $_GET['create'] == 1)
         <script>registrarIngreso('<?php echo $_GET["id"] ?>', '<?php echo $_GET["name"] ?>')</script>
     @endif
@@ -14,7 +14,7 @@
             <div class="card-body">
 
                 <h4 class="mt-0 header-title">Control de ingreso de Funcionarios</h4>
-                
+
                 <hr>
 
                 @if (session()->has('create') && session('create') == 1)
@@ -22,7 +22,7 @@
                         <h6>El Funcionario se creo correctamente.</h6>
                     </div>
                 @endif
-                
+
                 @if (session()->has('create') && session('create') == 0)
                     <div class="alert alert-danger">
                         <h6>Ocurrio un error, contacte al desarrollador.</h6>
@@ -34,7 +34,7 @@
                         <h6>Se registro el ingreso correctamente</h6>
                     </div>
                 @endif
-                
+
                 @if (session()->has('ingreso') && session('ingreso') == 0)
                     <div class="alert alert-danger">
                         <h6>Ocurrio un error, contacte al desarrollador.</h6>
@@ -47,9 +47,9 @@
                     </div>
                 @endif
 
-                <div class="row p-xl-3 p-md-3">                   
+                <div class="row p-xl-3 p-md-3">
                     <div class="table-responsive" id="Resultados">
-                        
+
                         @php
                             $hoy = \Carbon\Carbon::now('America/Bogota')->isoFormat('Y-MM-DD');
                         @endphp
@@ -57,7 +57,7 @@
                         <div class="page-title-box py-2">
                             <div class="row mx-0 align-items-center">
 
-                                <form class="row col-12 justify-content-center" method="POST" action="/control/search"> 
+                                <form class="row col-12 justify-content-center" method="POST" action="/control/search">
                                     @csrf
 
                                     <div class="form-group mb-0 col-lg-6">
@@ -74,11 +74,13 @@
                                     <h6>Fecha: {{ $hoy }} </h6>
                                 </div>
                                 <div class="col-4">
+                                @can('control ingreso')
                                     <div class="float-right">
-                                        <button class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light float-right" data-toggle="modal" data-target="#crearFuncionario" type="button">
+                                        <button  style="display: blok" class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light float-right" data-toggle="modal" data-target="#crearFuncionario" type="button">
                                             <i class="mdi mdi-plus mr-2"></i> Agregar
                                         </button>
                                     </div>
+                                @endcan
                                 </div>
                             </div> <!-- end row -->
                         </div>
@@ -111,13 +113,18 @@
                                         <td>{{ isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['fecha'] : '' }}</td>
                                         <td>{{ isset($item->ingresos[0]['fecha']) ? $item->ingresos[0]['temperatura'] : '' }}</td>
                                         <td class="text-center">
+
+                                        @canany(['control ingreso', 'universal'])
                                             <button type="button" class="btn btn-outline-info btn-sm" <?php echo $hoy <= $ultimoIngreso ? 'disabled' : '' ?> onclick="registrarIngreso({{ $item->id }}, '{{ $item->name }}')" data-toggle="tooltip" data-placement="top" title="Registrar ingreso">
                                                 <i class="mdi mdi-pencil"></i>
                                             </button>
-                                            
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="historialIngresos({{ $item->id }})" data-toggle="tooltip" data-placement="top" title="Ver Historial">
+                                        @endcanany
+
+                                        @canany(['administrador personal', 'universal'])
+                                            <a type="button" class="btn btn-outline-secondary btn-sm" href="{{route('VerHistorial',$item->id)}}" title="Ver Historial">
                                                 <i class="mdi mdi-eye"></i>
-                                            </button>
+                                            </a>
+                                        @endcanany
                                         </td>
                                     </tr>
                                 @endforeach
@@ -126,7 +133,7 @@
                     </div>
                 </div>
 
-                
+
                 {{ $funcionarios->links() }}
 
             </div>
@@ -177,19 +184,20 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="email" class="col-sm-2 col-form-label">Correo</label>
+                        <label for="correo" class="col-sm-2 col-form-label">Correo</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="email" name="email" id="email" placeholder="Escriba el correo"  />
                         </div>
                     </div>
 
+
                     <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
 
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Agregar</button>
-                    </div> 
+                    </div>
 
-                </form>   
+                </form>
             </div>
         </div>
     </div>
@@ -225,7 +233,7 @@
                             </select>
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                         <label for="temperatura" class="col-sm-2 col-form-label">Temperatura</label>
                         <div class="col-sm-10">
@@ -242,19 +250,81 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="dolor" class="col-sm-2 col-form-label">¿Presenta dolor de garganta?</label>
+                        <div class="col-sm-10">
+                            <select name="dolor" id="dolor" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fiebre" class="col-sm-3 col-form-label">¿Presenta fiebre?</label>
+                        <div class="col-sm-9">
+                            <select name="fiebre" id="fiebre" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="tos" class="col-sm-2 col-form-label">¿Presenta tos?</label>
+                        <div class="col-sm-10">
+                            <select name="tos" id="tos" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dificultad" class="col-sm-3 col-form-label">¿Presenta dificultad para respirar?</label>
+                        <div class="col-sm-9">
+                            <select name="dificultad" id="dificultad" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fatiga" class="col-sm-3 col-form-label">¿Presenta fatiga?</label>
+                        <div class="col-sm-9">
+                            <select name="fatiga" id="fatiga" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="escalofrio" class="col-sm-3 col-form-label">¿Presenta escalofrio?</label>
+                        <div class="col-sm-9">
+                            <select name="escalofrio" id="escalofrio" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="musculo" class="col-sm-3 col-form-label">¿Presenta dolor muscular?</label>
+                        <div class="col-sm-9">
+                            <select name="musculo" id="musculo" class="form-control" required>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <input type="hidden" value="{{ Request::path() == 'control/funcionarios' ? 'Funcionario' : 'Cliente' }}" name="tipo" />
 
-                    <input type="hidden" value="" name="control_ingreso_id" id="control_ingreso_id" />
+                    <input type="hidden"  name="control_ingreso_id" id="control_ingreso_id" />
 
                     <div class="mt-3">
                         <button class="btn btn-success btn-lg waves-effect waves-light" type="submit">Registrar</button>
-                    </div> 
+                    </div>
 
-                </form>   
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
-     

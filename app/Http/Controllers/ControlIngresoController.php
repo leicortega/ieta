@@ -15,15 +15,13 @@ class ControlIngresoController extends Controller
         $this->middleware('auth');
     }
 
-    public function funcionarios () { 
+    public function funcionarios () {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                    $query->orderBy('fecha','desc'); 
-                    $query->where('sede', Auth::user()->sede); 
+                    $query->orderBy('fecha','desc');
+                    $query->where('sede', Auth::user()->sede);
                 }))
                 ->where('tipo', 'Funcionario')
                 ->paginate(10);
-
-        // dd($funcionarios->where('sede', Auth::user()->sede));
 
         return view('funcionarios', ['funcionarios' => $funcionarios]);
     }
@@ -31,7 +29,7 @@ class ControlIngresoController extends Controller
     public function clientes () {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
                     $query->orderBy('fecha','desc');
-                    $query->where('sede', Auth::user()->sede); 
+                    $query->where('sede', Auth::user()->sede);
                 }))
                 ->where('tipo', 'Cliente')
                 ->paginate(10);
@@ -41,8 +39,8 @@ class ControlIngresoController extends Controller
 
     public function search(Request $request) {
         $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                    $query->orderBy('fecha','desc'); 
-                    $query->where('sede', Auth::user()->sede); 
+                    $query->orderBy('fecha','desc');
+                    $query->where('sede', Auth::user()->sede);
                 }))
                 ->where('identificacion', $request['identificacion_search'])
                 ->paginate(10);
@@ -78,15 +76,15 @@ class ControlIngresoController extends Controller
     public function registrar(Request $request) {
         $ingresado_hoy = Ingreso::where([['control_ingreso_id', $request['control_ingreso_id']], ['fecha', $request['fecha']], ['sede', Auth::user()->sede]])->exists();
 
-        $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
-                $query->orderBy('fecha','desc'); }))
-                ->paginate(10);
+        // $funcionarios = Control_ingreso::with(array('ingresos' => function($query){
+        //         $query->orderBy('fecha','desc'); }))
+        //         ->paginate(10);
 
         if ($ingresado_hoy) {
             if ($request['tipo'] == 'Funcionario') {
-                return redirect()->route('funcionarios')->with('ingreso', 2);
+                return redirect('/control/funcionarios')->with('ingreso', 2);
             } else {
-                return redirect()->route('clientes')->with('ingreso', 2);
+                return redirect('/control/clientes')->with('ingreso', 2);
             }
         } else {
             $new_ingreso = Ingreso::create([
@@ -94,21 +92,28 @@ class ControlIngresoController extends Controller
                 'estado' => $request['estado'],
                 'temperatura' => $request['temperatura'],
                 'contagiados' => $request['contagiados'],
+                'dolor'=>$request['dolor'],
+                'fiebre'=>$request['fiebre'],
+                'tos'=>$request['tos'],
+                'dificultad'=>$request['dificultad'],
+                'fatiga'=>$request['fatiga'],
+                'escalofrio'=>$request['escalofrio'],
+                'musculo'=>$request['musculo'],
                 'control_ingreso_id' => $request['control_ingreso_id'],
                 'sede' => Auth::user()->sede
             ]);
-    
+
             if($new_ingreso->save()){
                 if ($request['tipo'] == 'Funcionario') {
-                    return redirect()->route('funcionarios')->with('ingreso', 1);
+                    return redirect('/control/funcionarios')->with('ingreso', 1);
                 } else {
-                    return redirect()->route('clientes')->with('ingreso', 1);
+                    return redirect('/control/clientes')->with('ingreso', 1);
                 }
             } else {
                 if ($request['tipo'] == 'Funcionario') {
-                    return redirect()->route('funcionarios')->with('ingreso', 0);
+                    return redirect('/control/funcionarios')->with('ingreso', 0);
                 } else {
-                    return redirect()->route('clientes')->with('ingreso', 0);
+                    return redirect('/control/clientes')->with('ingreso', 0);
                 }
             }
         }
@@ -120,5 +125,10 @@ class ControlIngresoController extends Controller
         if ($user[0]->exists()) {
             return ['id' => $user[0]->id, 'name' => $user[0]->name];
         }
+    }
+
+    public function verHistorial(Request $request, $id){
+        $funcionarios = Control_ingreso::with('ingresos')->where('id', $id)->paginate(10);
+        return view('ver-registros', ['funcionarios' => $funcionarios]);
     }
 }

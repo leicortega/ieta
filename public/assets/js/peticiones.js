@@ -1,4 +1,5 @@
 
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -19,6 +20,57 @@ $('#buscar-qr').submit(function () {
     });
     return false;
 });
+
+$('#id_formulario').css('display','none');
+$('#id_mensaje').css('display','none');
+$('#id_mensaje2').css('display','none');
+$('#id_mensaje3').css('display','none');
+
+$('#alex').submit(function () {
+    var id = $('#identificacion_usuario').val().trim();
+    //console.log(id);
+    if(id==""){
+
+        $('#id_mensaje2').css('display','block');
+    }  
+    else{
+        $.ajax({
+            url: '/buscaridentificacion/'+id,
+            type: 'get',
+            success: function (data) {  
+                //console.log(data.ingreso[0]);
+                if(data.ingreso[0]){
+                    if(data.ingreso[0].direccion){
+                        $('#id_mensaje2').css('display','none');
+                        $('#id_informacion').css('display','none');
+                        $('#id_formulario').css('display','none');
+                        $('#id_mensaje3').css('display','none');
+                        $('#id_mensaje').css('display','block'); 
+                    }
+                    else{
+                        $('#id_mensaje2').css('display','none');
+                        $('#id_informacion').css('display','none');
+                        $('#id_mensaje').css('display','none');
+                        $('#id_mensaje3').css('display','none');
+                        $('#id_formulario').css('display','block'); 
+                        //console.log(data.ingreso[0].id);
+                        $('#personal_id').val(data.ingreso[0].id);
+                        console.log( $('#personal_id').val() );
+                    }
+                }
+                else{
+                    $('#id_formulario').css('display','none');
+                    $('#id_mensaje').css('display','none');
+                    $('#id_mensaje2').css('display','none');
+                    $('#id_mensaje3').css('display','block');
+                }            
+            }
+        });
+    }
+    return false;
+});
+
+
 
 function codeQr(id) {
     $.ajax({
@@ -124,7 +176,7 @@ function verPersona(id) {
 }
 
 function registrarIngreso(id, name) {
-    $('#registrarIngreso-title').html('Registrar ingreso de ' + name)
+    $('#registrarIngreso-title').html('Historial de ' + name)
     $('#control_ingreso_id').val(id)
 
     $('#registrarIngreso').modal('show')

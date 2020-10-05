@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Personal;
+use App\Control_ingreso;
 
 // Rutas Auth
 Auth::routes();
@@ -33,6 +35,36 @@ Route::group(['middleware' => ['permission:universal']], function () {
     Route::post('/admin/users/create', 'AdminController@create')->name('users-create');
 });
 
+// Ruta administrador personal
+
+Route::group(['middleware' => ['permission:administrador personal|control ingreso|universal']], function () {
+    Route::get('/control/funcionarios', 'ControlIngresoController@funcionarios');
+    Route::get('/control/clientes', 'ControlIngresoController@clientes');
+    Route::get('/control/ver-historial/{id}', 'ControlIngresoController@verHistorial')->name('VerHistorial');
+});
+
+// Ruta Control ingreso formulario
+Route::get('/Formulariocovid', function () { return view('view-formulario'); });
+
+Route::get('/buscaridentificacion/{id}', function($id) {
+
+    $ingreso = Control_ingreso::where('identificacion','like', $id)->get();
+    if($ingreso){
+
+        return ['ingreso'=>$ingreso];
+    }
+    else{
+
+    }
+});
+
+Route::post('/insertar_registro', function(Request $request) {
+    Control_ingreso::find($request->post('personal_id'))->update($request->all());
+    return redirect()->back()->with('mensaje','Gracias por llenar el formulario');
+});
+
+
+//Rutas codigo qr
 Route::get('/view', function () { return view('view'); });
 
 Route::get('/view/{id}', function ($id) {
