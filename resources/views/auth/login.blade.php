@@ -13,25 +13,25 @@
                             <div class="card-body">
                                 <div class="text-center mt-4">
                                     <div class="text-center py-4">
-                                        <a href="/" class="logo"><img src="assets/images/logo-light.png" height="50" alt="logo"></a>
+                                        <a href="/" class="logo"><img src="assets/images/logo-light02.png" height="150" alt="logo" class="rounded-circle"></a>
                                     </div>
                                 </div>
-                                <div class="p-3"> 
+                                <div class="p-3">
                                     <h4 class="font-18 text-center">Bienvenido</h4>
                                     <p class="text-muted text-center mb-4">Ingrese para continuar</p>
                                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                                         @csrf
-                
+
                                         <div class="form-group">
                                             <label for="username">Usuario</label>
-                                            <input id="username" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus placeholder="Ingrese el correo">
-                                            @error('email')
+                                            <input id="username" type="number" class="form-control @error('identificacion') is-invalid @enderror" name="identificacion" value="{{ old('identificacion') }}" required autofocus placeholder="Ingrese el correo">
+                                            @error('identificacion')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
-                
+
                                         <div class="form-group">
                                             <label for="userpassword">Contraseña</label>
                                             <input id="userpassword" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Enter password">
@@ -41,27 +41,24 @@
                                                 </span>
                                             @enderror
                                         </div>
-                
+
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="customControlInline">
                                             <label class="custom-control-label" for="customControlInline">Remember me</label>
                                         </div>
-                                        
+
                                         <div class="mt-3">
                                             <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Ingresar</button>
-                                        </div> 
-                                        <div class="mt-3">
-                                            <a href="/view" class="btn btn-primary btn-block waves-effect waves-light">Escanear Codigo</a>
-                                        </div> 
+                                        </div>
 
                                     </form>
-                
+
                                 </div>
-                    
+
                             </div>
                         </div>
                         <div class="mt-5 text-center text-white-50">
-                            <p>© 2020 Cootranshuila LTDA.</p>
+                            <p>© 2021 Institución Educativa Tecnico Agricola.</p>
                         </div>
 
                     </div>
@@ -70,7 +67,7 @@
         </div>
 
         @include('layouts.src.footer')
-        
+
     </body>
 
 </html>

@@ -26,7 +26,7 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-sm-6">
-                                    <h4 class="page-title">Dashboard Cootranshuila</h4>
+                                    <h4 class="page-title">Dashboard IETA</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item active">
                                             @auth
@@ -39,7 +39,7 @@
                         </div>
                         <!-- end page-title -->
 
-                        
+
                     </div>
                     <!-- container-fluid -->
 
@@ -49,7 +49,7 @@
                 <!-- content -->
 
                 <footer class="footer">
-                    Cootranshuila LTDA © Copyright 2020, Todos los derechos reservados.
+                    Institución Educativa Tecnico Agricola © Copyright 2021, Todos los derechos reservados.
                 </footer>
 
             </div>
@@ -61,7 +61,7 @@
         <!-- END wrapper -->
 
         @include('layouts.src.footer')
-        
+
     </body>
 
 </html>
