@@ -3,3 +3,5 @@ $('#datepicker-autoclose').datepicker({
     autoclose: true,
     todayHighlight: true,
 });
+
+$(".select2").select2();

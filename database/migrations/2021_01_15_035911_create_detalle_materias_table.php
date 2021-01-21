@@ -19,10 +19,18 @@ class CreateDetalleMateriasTable extends Migration
             $table->string('nombre');
             $table->longText('descripcion');
             $table->string('adjunto');
+            $table->enum('entregado', [0, 1])->default(0);
+            $table->dateTime('fecha_entrega')->nullable();
+            $table->string('adjunto_entregado')->nullable();
+            $table->float('calificacion')->nullable();
 
             $table->foreignId('materias_id')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            $table->foreignId('estudiantes_id')
+                ->constrained()
+                ->nullOnDelete();
 
             $table->timestamps();
         });

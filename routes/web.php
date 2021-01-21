@@ -30,11 +30,14 @@ Route::group(['middleware' => ['permission:general']], function () {
 // Rutas para los Grados
 Route::group(['middleware' => ['permission:general']], function () {
     Route::get('/grados', 'GradosController@index');
+    Route::get('/grados/{id}', 'GradosController@ver');
     Route::post('/grados/create', 'GradosController@create');
+    Route::post('/grados/agregar_estudiante', 'GradosController@agregar_estudiante');
 });
 
 // Rutas para las materias
 Route::group(['middleware' => ['permission:general']], function () {
     Route::get('/materias', 'MateriasController@index');
+    Route::get('/materias/{id}', 'MateriasController@ver');
     Route::post('/materias/create', 'MateriasController@create');
 });

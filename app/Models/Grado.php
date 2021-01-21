@@ -11,6 +11,14 @@ class Grado extends Model
     ];
 
     public function profesor() {
-        return $this->belongsTo('App\Profesor', 'profesores_id');
+        return $this->belongsTo('App\Models\Profesor', 'profesores_id');
+    }
+
+    public function detalle() {
+        return $this->hasMany('App\Models\Detalle_grado', 'grados_id');
+    }
+
+    public function materias() {
+        return $this->hasMany('App\Models\Materia', 'grados_id');
     }
 }

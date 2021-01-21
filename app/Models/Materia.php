@@ -11,10 +11,10 @@ class Materia extends Model
     ];
 
     public function grado() {
-        return $this->belongsTo('App\Grado', 'grados_id');
+        return $this->belongsTo('App\Models\Grado', 'grados_id');
     }
 
     public function profesor() {
-        return $this->belongsTo('App\Profesor', 'profesores_id');
+        return $this->belongsTo('App\Models\Profesor', 'profesores_id');
     }
 }

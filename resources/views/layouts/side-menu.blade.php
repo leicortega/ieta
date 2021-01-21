@@ -34,7 +34,7 @@
 
                 @canany(['materias', 'general'])
                     <li>
-                        <a href="/materias" class="waves-effect"><i class="mdi mdi-notebook-multiple"></i><span> Materias <span class="float-right menu-arrow"></span> </span></a>
+                        <a href="/materias" class="waves-effect"><i class="mdi mdi-notebook-multiple"></i><span> Areas <span class="float-right menu-arrow"></span> </span></a>
                     </li>
                 @endcanany
 

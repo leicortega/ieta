@@ -37,23 +37,9 @@ class GradosController extends Controller
 
     public function ver(Request $request) {
         $grado = Grado::with(['detalle' => function ($query) {
-            $query->with('estudiante'); }])
-            ->with(['materias' => function ($query) {
-                $query->with('profesor'); }])
-            ->with('profesor')
-            ->find($request['id']);
+            $query->with('estudiante');
+        }])->with('profesor')->find($request['id']);
 
-        return view('grados.ver', ['grado' => $grado]);
-    }
-
-    public function agregar_estudiante(Request $request) {
-        $detalle = Detalle_grado::create($request->all());
-
-        if ($detalle->save()) {
-            return redirect()->back()->with(['create' => 1, 'mensaje' => 'Estudiante agregado correctamente.']);
-        } else {
-            return redirect()->back()->with(['create' => 0, 'mensaje' => 'El estudiante no se agrego, intente nuevamente.']);
-        }
-
+        return view('grado.ver', ['grado' => $grado]);
     }
 }

@@ -33,4 +33,8 @@ class MateriasController extends Controller
             return redirect()->back()->with(['create' => 0, 'mensaje' => 'Ocurrio un error, intente nuevamente.']);
         }
     }
+
+    public function ver(Request $request) {
+        $area = Materia::find($request['id']);
+    }
 }

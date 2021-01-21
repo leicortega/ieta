@@ -24,7 +24,7 @@
 
                                         <div class="form-group">
                                             <label for="username">Usuario</label>
-                                            <input id="username" type="number" class="form-control @error('identificacion') is-invalid @enderror" name="identificacion" value="{{ old('identificacion') }}" required autofocus placeholder="Ingrese el correo">
+                                            <input id="username" type="number" class="form-control @error('identificacion') is-invalid @enderror" name="identificacion" value="{{ old('identificacion') }}" required placeholder="Ingrese la identificacion">
                                             @error('identificacion')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
 
                                         <div class="form-group">
                                             <label for="userpassword">Contraseña</label>
-                                            <input id="userpassword" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Enter password">
+                                            <input id="userpassword" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="ingrese la contraseña">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
